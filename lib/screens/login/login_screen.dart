@@ -4,7 +4,15 @@ import 'package:ecommerce_app/utils/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+
+  const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final LoginController controller = Get.put(LoginController());
 
   @override

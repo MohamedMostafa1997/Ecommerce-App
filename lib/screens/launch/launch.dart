@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/screens/login/login_screen.dart';
-import 'package:ecommerce_app/screens/products/products_screen_view.dart';
+import 'package:ecommerce_app/screens/products/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
