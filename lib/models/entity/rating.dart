@@ -1,6 +1,9 @@
 import 'package:ecommerce_app/utils/map_keys.dart';
 
+
 class Rating {
+
+
   final double rate;
   final int count;
 
@@ -12,4 +15,14 @@ class Rating {
       count: json[MapKeys.count] as int,
     );
   }
+
+    Map<String, dynamic> toJson() => {
+        MapKeys.rate: rate,
+        MapKeys.count: count,
+      };
+
+  @override
+  String toString() => 'Rating(rate: $rate, count: $count)';
+
+  
 }

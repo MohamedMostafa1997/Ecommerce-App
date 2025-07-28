@@ -1,7 +1,9 @@
 import 'package:ecommerce_app/models/entity/rating.dart';
+import 'package:ecommerce_app/models/entity/rating_converter.dart';
 import 'package:ecommerce_app/utils/map_keys.dart';
 import 'package:floor/floor.dart';
 
+@TypeConverters([RatingConverter])
 @entity
 class Product {
   @primaryKey
@@ -14,6 +16,7 @@ class Product {
   final String image;
   final String category;
   final String description;
+
   final Rating rating;
 
   Product({
@@ -38,4 +41,10 @@ class Product {
       rating: Rating.fromjson(json[MapKeys.rating]),
     );
   }
+
+  // @override
+  // String toString() {
+  //   return 'Product(id: $id, name: $name, price: $price, rating: $rating)';
+  // }
+  
 }
