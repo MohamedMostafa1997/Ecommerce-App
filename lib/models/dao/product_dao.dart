@@ -4,8 +4,8 @@ import 'package:floor/floor.dart';
 @dao
 abstract class ProductDao {
   
-  @Query('SELECT * FROM Product WHERE id = :id')
-  Future<List<Product>>getProductById(int id);
+  @Query('SELECT * FROM Product')
+  Future<List<Product>>getProduct();
 
   @Query('UPDATE Product SET quantity = :quantity WHERE id = :id')
   Future<void> updateQuantity(int id, int quantity);

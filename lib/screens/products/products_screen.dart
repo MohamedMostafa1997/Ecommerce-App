@@ -25,7 +25,10 @@ class _ProductsState extends State<Products> {
 
   void logout() async {
     await controller.logoutUser();
+    
+    if (mounted) {
     Navigator.pushReplacementNamed(context, RouteNames.login);
+    }
   }
 
   void goToCart() {
@@ -33,14 +36,25 @@ class _ProductsState extends State<Products> {
   }
 
   void goToDetails(Product product) {
-    Navigator.pushNamed(context, RouteNames.productDetails, arguments: product);
+    Navigator.pushNamed(
+      context,
+      RouteNames.productDetails,
+      arguments: product.id,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Products'),
+        title: Text(
+          'Products',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.pinkAccent,
+          ),
+        ),
         actions: [
           IconButton(onPressed: goToCart, icon: Icon(Icons.shopping_cart)),
           IconButton(onPressed: logout, icon: Icon(Icons.logout)),

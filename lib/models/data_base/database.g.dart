@@ -170,8 +170,8 @@ class _$ProductDao extends ProductDao {
   final DeletionAdapter<Product> _productDeletionAdapter;
 
   @override
-  Future<List<Product>> getProductById(int id) async {
-    return _queryAdapter.queryList('SELECT * FROM Product WHERE id = ?1',
+  Future<List<Product>> getProduct() async {
+    return _queryAdapter.queryList('SELECT * FROM Product',
         mapper: (Map<String, Object?> row) => Product(
             id: row['id'] as int,
             quantity: row['quantity'] as int,
@@ -181,7 +181,7 @@ class _$ProductDao extends ProductDao {
             description: row['description'] as String,
             image: row['image'] as String,
             rating: _ratingConverter.decode(row['rating'] as String)),
-        arguments: [id]);
+       );
   }
 
   @override

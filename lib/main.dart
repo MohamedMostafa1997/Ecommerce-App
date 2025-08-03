@@ -1,8 +1,10 @@
 import 'package:ecommerce_app/models/data_base/database.dart';
+import 'package:ecommerce_app/models/entity/product.dart';
 import 'package:ecommerce_app/screens/cart/cart_screen.dart';
 import 'package:ecommerce_app/screens/checkout/cheakout.dart';
 import 'package:ecommerce_app/screens/launch/launch.dart';
 import 'package:ecommerce_app/screens/login/login_screen.dart';
+import 'package:ecommerce_app/screens/product_details/product_details_repo.dart';
 import 'package:ecommerce_app/screens/product_details/product_details_screen.dart';
 import 'package:ecommerce_app/screens/products/products_screen.dart';
 import 'package:ecommerce_app/utils/route_names.dart';
@@ -13,7 +15,7 @@ Future main() async {
   final ProductDatabase productDatabase =
       await $FloorProductDatabase.databaseBuilder('product.db').build();
 
-  runApp(App(database:productDatabase ));
+  runApp(App(database: productDatabase));
 }
 
 class App extends StatelessWidget {
@@ -34,7 +36,11 @@ class App extends StatelessWidget {
         RouteNames.init: (context) => Launch(),
         RouteNames.login: (context) => Login(),
         RouteNames.products: (context) => Products(),
-        RouteNames.productDetails: (context) => ProductDetails(productId: product.id),
+        RouteNames.productDetails: (context) {
+          ProductDetailsRepo productDetailsRepo = ProductDetailsRepo(database);
+          return ProductDetails( productDetailsRepo: productDetailsRepo,);
+        },
+        // TO DO
         RouteNames.cart: (context) => Cart(),
         RouteNames.cheakOut: (context) => Cheakout(),
       },
