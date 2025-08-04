@@ -1,32 +1,51 @@
 import 'package:ecommerce_app/models/data_base/database.dart';
 import 'package:ecommerce_app/models/entity/product.dart';
+import 'package:ecommerce_app/screens/cart/cart_repo.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
-  final ProductDatabase database;
+  final CartRepo cartRepo;
 
-  CartController(this.database);
+  CartController(this.cartRepo);
 
   RxList cartItems = <Product>[].obs;
-  RxBool isLoading = true.obs;
+  RxBool isLoading = false.obs;
   RxString errorMessage = ''.obs;
+  RxString snackBarMessage = ''.obs;
 
-  Future fetchCartItems () async {
-
-    // try {
-    //   isLoading.value = true;
-    //   final items = await database.productDao.get
-    // }
-
+  Future<void> fetchCartItems() async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+      final List<Product> items = await cartRepo.fetchCartItems();
+      cartItems.assignAll(items);
+      if (cartItems.isEmpty) {
+        errorMessage.value = "No Product Items Found";
+      }
+    } catch (e) {
+      errorMessage.value = "Failed to load cart items. Please try again.";
+    } finally {
+      isLoading.value = false;
+    }
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchCartItems();
+  Future<void> increaseQuantity(Product product) async {
+    await cartRepo.increaseQuantity(product);
+    await fetchCartItems();
   }
 
+  Future<void> decreaseQuantity(Product product) async {
+    if (product.quantity > 1) {
+      await cartRepo.decreaseQuantity(product);
+    } else {
+      snackBarMessage.value = "Can't decrease quantity";
+    }
 
+    await fetchCartItems();
+  }
 
-
+  Future<void> removeItem(Product product) async {
+    await cartRepo.removeItem(product);
+    await fetchCartItems();
+  }
 }

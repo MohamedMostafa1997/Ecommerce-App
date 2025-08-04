@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/models/data_base/database.dart';
 import 'package:ecommerce_app/models/entity/product.dart';
+import 'package:ecommerce_app/screens/cart/cart_repo.dart';
 import 'package:ecommerce_app/screens/cart/cart_screen.dart';
 import 'package:ecommerce_app/screens/checkout/cheakout.dart';
 import 'package:ecommerce_app/screens/launch/launch.dart';
@@ -41,7 +42,10 @@ class App extends StatelessWidget {
           return ProductDetails( productDetailsRepo: productDetailsRepo,);
         },
         // TO DO
-        RouteNames.cart: (context) => Cart(),
+        RouteNames.cart: (context) {
+           CartRepo cartRepo = CartRepo(database);
+           return Cart(cartRepo: cartRepo);
+        },
         RouteNames.cheakOut: (context) => Cheakout(),
       },
     );

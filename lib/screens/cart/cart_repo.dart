@@ -1,18 +1,27 @@
 import 'package:ecommerce_app/models/data_base/database.dart';
+import 'package:ecommerce_app/models/entity/product.dart';
 
 class CartRepo {
- // TO DO 
-    
-   CartRepo();
+  final ProductDatabase database;
 
-  // Future fetchCartItems () async {
-  //   // cartId = 1;
-  //    //////////////////
+  CartRepo(this.database);
 
+  Future<List<Product>> fetchCartItems() async {
+    return await database.productDao.getProduct();
+  }
 
-  //   try {
-  //     final items = await database.productDao.getProductById(id);
+  Future<void> increaseQuantity(Product product) async {
+    final newQuantity = product.quantity + 1;
 
-  //   }
-  // }
+    await database.productDao.updateQuantity(product.id, newQuantity);
+  }
+
+  Future<void> decreaseQuantity(Product product) async {
+    final newQuantity = product.quantity - 1;
+    await database.productDao.updateQuantity(product.id, newQuantity);
+  }
+
+  Future<void> removeItem(Product product) async {
+    await database.productDao.deleteProduct(product);
+  }
 }

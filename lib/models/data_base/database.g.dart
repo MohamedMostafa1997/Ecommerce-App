@@ -180,8 +180,7 @@ class _$ProductDao extends ProductDao {
             category: row['category'] as String,
             description: row['description'] as String,
             image: row['image'] as String,
-            rating: _ratingConverter.decode(row['rating'] as String)),
-       );
+            rating: _ratingConverter.decode(row['rating'] as String)));
   }
 
   @override
@@ -196,7 +195,7 @@ class _$ProductDao extends ProductDao {
 
   @override
   Future<void> insertProduct(Product product) async {
-    await _productInsertionAdapter.insert(product, OnConflictStrategy.abort);
+    await _productInsertionAdapter.insert(product, OnConflictStrategy.replace);
   }
 
   @override
