@@ -1,5 +1,5 @@
 import 'dart:ffi';
-
+import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/models/data_base/database.dart';
 import 'package:ecommerce_app/models/entity/product.dart';
 import 'package:ecommerce_app/screens/product_details/product_details_controller.dart';
@@ -7,21 +7,22 @@ import 'package:ecommerce_app/screens/product_details/product_details_repo.dart'
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProductDetails extends StatefulWidget {
+class ProductDetailsScreen extends StatefulWidget {
   final ProductDetailsRepo productDetailsRepo;
-  const ProductDetails({super.key, required this.productDetailsRepo});
+  final CartRepo cartRepo ;
+  const ProductDetailsScreen({super.key, required this.productDetailsRepo , required this.cartRepo});
 
   @override
-  State<ProductDetails> createState() => _ProductDetailsState();
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
-class _ProductDetailsState extends State<ProductDetails> {
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int? productId;
   late final ProductDetailsController controller;
 
   @override
   void initState() {
-    controller = ProductDetailsController(widget.productDetailsRepo);
+    controller = ProductDetailsController(widget.productDetailsRepo,widget.cartRepo);
     super.initState();
   }
 

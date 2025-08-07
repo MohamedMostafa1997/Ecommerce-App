@@ -1,22 +1,22 @@
 import 'package:ecommerce_app/models/entity/product.dart';
 import 'package:ecommerce_app/screens/cart/cart_controller.dart';
 import 'package:ecommerce_app/screens/cart/cart_item_widget.dart';
-import 'package:ecommerce_app/screens/cart/cart_repo.dart';
+import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/utils/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_workers/rx_workers.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/state_manager.dart';
 
-class Cart extends StatefulWidget {
+class CartScreen extends StatefulWidget {
   final CartRepo cartRepo;
-  const Cart({super.key, required this.cartRepo});
+  const CartScreen({super.key, required this.cartRepo});
 
   @override
-  State<Cart> createState() => _CartState();
+  State<CartScreen> createState() => _CartScreenState();
 }
 
-class _CartState extends State<Cart> {
+class _CartScreenState extends State<CartScreen> {
   late final CartController controller;
 
   @override
@@ -64,7 +64,9 @@ class _CartState extends State<Cart> {
         }
 
         return Column(
+          
           children: [
+            
             Expanded(
               child: ListView.builder(
                 itemCount: controller.cartItems.length,
@@ -76,23 +78,28 @@ class _CartState extends State<Cart> {
                   );
                 },
               ),
+             
             ),
-            Container(
-              padding: EdgeInsets.all(16),
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pinkAccent,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+             SizedBox(height: 20,),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+              child: SizedBox(
+                height: 50,
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pinkAccent,
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                ),
-                onPressed:
-                    () => Navigator.pushNamed(context, RouteNames.cheakOut),
-                child: Text(
-                  "Checkout",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  onPressed:
+                      () => Navigator.pushNamed(context, RouteNames.cheakOut),
+                  child: Text(
+                    "Checkout",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
               ),
             ),

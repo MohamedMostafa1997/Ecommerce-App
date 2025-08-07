@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-class Launch extends StatelessWidget {
-  const Launch({super.key});
+class LaunchScreen extends StatelessWidget {
+  const LaunchScreen({super.key});
 
 
   Future<bool> cheakLoginStatus() async {
@@ -22,7 +22,7 @@ class Launch extends StatelessWidget {
         if(!snapshot.hasData){
           return Scaffold(body: Center(child: CircularProgressIndicator(),),);
         }
-        return snapshot.data! ?Products() : Login();
+        return snapshot.data! ?ProductsScreen() : LoginScreen();
       });
   }
 }

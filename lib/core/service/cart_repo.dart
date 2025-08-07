@@ -6,6 +6,21 @@ class CartRepo {
 
   CartRepo(this.database);
 
+  Future<void> insertToDatabase(Product product) async {
+    await database.productDao.insertProduct(
+      Product(
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+        description: product.description,
+        rating: product.rating,
+        quantity: 1,
+      ),
+    );
+  }
+
   Future<List<Product>> fetchCartItems() async {
     return await database.productDao.getProduct();
   }
@@ -23,5 +38,12 @@ class CartRepo {
 
   Future<void> removeItem(Product product) async {
     await database.productDao.deleteProduct(product);
+  }
+
+  double calculateTotalPrice(List<dynamic> cartItems) {
+    return cartItems.fold(
+      0.0,
+      (sum, item) => sum + (item.price * item.quantity),
+    );
   }
 }

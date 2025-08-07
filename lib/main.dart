@@ -1,8 +1,8 @@
 import 'package:ecommerce_app/models/data_base/database.dart';
 import 'package:ecommerce_app/models/entity/product.dart';
-import 'package:ecommerce_app/screens/cart/cart_repo.dart';
+import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/screens/cart/cart_screen.dart';
-import 'package:ecommerce_app/screens/checkout/cheakout.dart';
+import 'package:ecommerce_app/screens/checkout/cheakout_screen.dart';
 import 'package:ecommerce_app/screens/launch/launch.dart';
 import 'package:ecommerce_app/screens/login/login_screen.dart';
 import 'package:ecommerce_app/screens/product_details/product_details_repo.dart';
@@ -25,6 +25,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CartRepo cartRepo = CartRepo(database);
     return MaterialApp(
       theme: ThemeData(
         progressIndicatorTheme: ProgressIndicatorThemeData(
@@ -34,19 +35,16 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: RouteNames.init,
       routes: {
-        RouteNames.init: (context) => Launch(),
-        RouteNames.login: (context) => Login(),
-        RouteNames.products: (context) => Products(),
+        RouteNames.init: (context) => LaunchScreen(),
+        RouteNames.login: (context) => LoginScreen(),
+        RouteNames.products: (context) => ProductsScreen(),
         RouteNames.productDetails: (context) {
           ProductDetailsRepo productDetailsRepo = ProductDetailsRepo(database);
-          return ProductDetails( productDetailsRepo: productDetailsRepo,);
+          return ProductDetailsScreen(productDetailsRepo: productDetailsRepo, cartRepo: cartRepo,);
         },
         // TO DO
-        RouteNames.cart: (context) {
-           CartRepo cartRepo = CartRepo(database);
-           return Cart(cartRepo: cartRepo);
-        },
-        RouteNames.cheakOut: (context) => Cheakout(),
+        RouteNames.cart: (context) => CartScreen(cartRepo: cartRepo),
+        RouteNames.cheakOut: (context) => CheckoutScreen(cartRepo: cartRepo,),
       },
     );
   }

@@ -4,15 +4,15 @@ import 'package:ecommerce_app/utils/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Login extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
 
-  const Login({super.key});
+  const LoginScreen({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   final LoginController controller = Get.put(LoginController());
 
   @override

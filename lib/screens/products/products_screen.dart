@@ -5,14 +5,14 @@ import 'package:ecommerce_app/utils/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Products extends StatefulWidget {
-  const Products({super.key});
+class ProductsScreen extends StatefulWidget {
+  const ProductsScreen({super.key});
 
   @override
-  State<Products> createState() => _ProductsState();
+  State<ProductsScreen> createState() => _ProductsScreenState();
 }
 
-class _ProductsState extends State<Products> {
+class _ProductsScreenState extends State<ProductsScreen> {
   final ProductsController controller = Get.put(ProductsController());
   final TextEditingController searchController = TextEditingController();
 

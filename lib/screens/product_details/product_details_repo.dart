@@ -25,18 +25,5 @@ class ProductDetailsRepo {
     }
   }
 
-  Future<void> insertToDatabase(Product product) async {
-    await database.productDao.insertProduct(
-      Product(
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        category: product.category,
-        description: product.description,
-        rating: product.rating,
-        quantity: 1,
-      ),
-    );
-  }
+  
 }

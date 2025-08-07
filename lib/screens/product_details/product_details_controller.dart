@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/models/data_base/database.dart';
 import 'package:ecommerce_app/models/entity/product.dart';
 import 'package:ecommerce_app/screens/product_details/product_details_repo.dart';
@@ -5,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsController extends GetxController {
+  final CartRepo cartRepo ; 
   final ProductDetailsRepo productDetailsRepo;
 
-  ProductDetailsController(this.productDetailsRepo);
+  ProductDetailsController(this.productDetailsRepo, this.cartRepo);
 
   final Rxn<Product> product = Rxn<Product>(null);
 
@@ -31,6 +33,6 @@ class ProductDetailsController extends GetxController {
   }
 
   Future<void> addToCart(product) async {
-    await productDetailsRepo.insertToDatabase(product);
+    await cartRepo.insertToDatabase(product);
   }
 }

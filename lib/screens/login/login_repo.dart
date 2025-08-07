@@ -15,7 +15,7 @@ class LoginRepo {
         body: {"username": username, "password": password},
       );
 
-      if (response.statusCode == 200) {
+      if ((response.statusCode == 200)|(response.statusCode==201)) {
         final  Map<String, dynamic>  data = json.decode(response.body);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool("isLoggedIn", true);
