@@ -1,12 +1,10 @@
 import 'package:ecommerce_app/core/service/cart_repo.dart';
-import 'package:ecommerce_app/models/data_base/database.dart';
 import 'package:ecommerce_app/models/entity/product.dart';
 import 'package:ecommerce_app/screens/product_details/product_details_repo.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsController extends GetxController {
-  final CartRepo cartRepo ; 
+  final CartRepo cartRepo;
   final ProductDetailsRepo productDetailsRepo;
 
   ProductDetailsController(this.productDetailsRepo, this.cartRepo);
@@ -14,6 +12,8 @@ class ProductDetailsController extends GetxController {
   final Rxn<Product> product = Rxn<Product>(null);
 
   final RxBool isLoading = false.obs;
+
+  final RxBool isInCart = false.obs;
 
   final RxString errorMessage = "".obs;
 
@@ -25,6 +25,7 @@ class ProductDetailsController extends GetxController {
 
     if (result['success'] == true) {
       product.value = result['data'];
+      isInCart.value = await cartRepo.isProductInCart(product.value!.id);
     } else {
       errorMessage.value = result['message'];
     }
@@ -34,5 +35,15 @@ class ProductDetailsController extends GetxController {
 
   Future<void> addToCart(product) async {
     await cartRepo.insertToDatabase(product);
+  }
+
+  Future<void> toggleCart(Product product) async {
+    if (isInCart.value) {
+      await cartRepo.removeItem(product);
+      isInCart.value = false;
+    } else {
+      await addToCart(product);
+      isInCart.value = true;
+    }
   }
 }

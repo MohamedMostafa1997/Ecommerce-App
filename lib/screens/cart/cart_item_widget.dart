@@ -15,7 +15,7 @@ class CartItemWidget extends StatelessWidget {
       child: Padding(padding: EdgeInsets.all(10),
        child:  Row(
         children: [
-          Image.network(product.image, width: 60 , height: 60,),
+          Image.network(product.image, width: 80 , height: 80,),
           SizedBox(width: 10,),
           Expanded(child: Text(product.name , style:  TextStyle(fontWeight: FontWeight.bold))),
           Row(

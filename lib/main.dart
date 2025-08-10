@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/models/data_base/database.dart';
-import 'package:ecommerce_app/models/entity/product.dart';
 import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/screens/cart/cart_screen.dart';
 import 'package:ecommerce_app/screens/checkout/cheakout_screen.dart';

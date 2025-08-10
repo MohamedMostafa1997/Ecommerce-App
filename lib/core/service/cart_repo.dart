@@ -25,6 +25,11 @@ class CartRepo {
     return await database.productDao.getProduct();
   }
 
+  Future<bool> isProductInCart(int productId) async {
+    final products = await fetchCartItems();
+    return products.any((item) => item.id == productId);
+  }
+
   Future<void> increaseQuantity(Product product) async {
     final newQuantity = product.quantity + 1;
 

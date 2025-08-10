@@ -91,7 +91,7 @@ class _CartScreenState extends State<CartScreen> {
                     backgroundColor: Colors.pinkAccent,
                     padding: EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   onPressed:

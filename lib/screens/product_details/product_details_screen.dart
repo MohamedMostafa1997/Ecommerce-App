@@ -1,6 +1,4 @@
-import 'dart:ffi';
 import 'package:ecommerce_app/core/service/cart_repo.dart';
-import 'package:ecommerce_app/models/data_base/database.dart';
 import 'package:ecommerce_app/models/entity/product.dart';
 import 'package:ecommerce_app/screens/product_details/product_details_controller.dart';
 import 'package:ecommerce_app/screens/product_details/product_details_repo.dart';
@@ -9,8 +7,12 @@ import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final ProductDetailsRepo productDetailsRepo;
-  final CartRepo cartRepo ;
-  const ProductDetailsScreen({super.key, required this.productDetailsRepo , required this.cartRepo});
+  final CartRepo cartRepo;
+  const ProductDetailsScreen({
+    super.key,
+    required this.productDetailsRepo,
+    required this.cartRepo,
+  });
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -22,7 +24,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   void initState() {
-    controller = ProductDetailsController(widget.productDetailsRepo,widget.cartRepo);
+    controller = ProductDetailsController(
+      widget.productDetailsRepo,
+      widget.cartRepo,
+    );
     super.initState();
   }
 
@@ -43,9 +48,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Future<void> addToCart(Product product) async {
     await controller.addToCart(product);
     if (mounted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Product added to cart')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            controller.isInCart.value
+                ? "Removed from cart"
+                : 'Product added to cart',
+          ),
+        ),
+      );
     }
   }
 
@@ -167,14 +178,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       height: 50,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.pinkAccent,
+                          backgroundColor:
+                              controller.isInCart.value
+                                  ? Colors.grey
+                                  : Colors.pinkAccent,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        onPressed: () => addToCart(product),
+                        onPressed: () async {
+                          await controller.toggleCart(
+                            controller.product.value!,
+                          );
+                        },
                         child: Text(
-                          "Add to Cart",
+                          controller.isInCart.value ? "Added" : "Add to Cart",
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),

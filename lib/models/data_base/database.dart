@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:ecommerce_app/models/dao/product_dao.dart';
 import 'package:ecommerce_app/models/entity/product.dart';
-import 'package:ecommerce_app/models/entity/rating.dart';
 import 'package:ecommerce_app/models/entity/rating_converter.dart';
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
