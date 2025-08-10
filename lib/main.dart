@@ -41,7 +41,6 @@ class App extends StatelessWidget {
           ProductDetailsRepo productDetailsRepo = ProductDetailsRepo(database);
           return ProductDetailsScreen(productDetailsRepo: productDetailsRepo, cartRepo: cartRepo,);
         },
-        // TO DO
         RouteNames.cart: (context) => CartScreen(cartRepo: cartRepo),
         RouteNames.cheakOut: (context) => CheckoutScreen(cartRepo: cartRepo,),
       },

@@ -41,10 +41,4 @@ class Product {
       rating: Rating.fromjson(json[MapKeys.rating]),
     );
   }
-
-  // @override
-  // String toString() {
-  //   return 'Product(id: $id, name: $name, price: $price, rating: $rating)';
-  // }
-  
 }
