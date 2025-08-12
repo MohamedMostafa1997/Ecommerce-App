@@ -78,7 +78,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                             ),
                             Text(
-                              "\$${controller.cartRepo.calculateTotalPrice([product]).toStringAsFixed(2)}",
+                              "\$${controller.getSingleProductPrice(product).toStringAsFixed(2)}",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.pinkAccent,
@@ -108,7 +108,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                     ),
                     Text(
-                      "\$${controller.cartRepo.calculateTotalPrice(controller.cartItems).toStringAsFixed(2)}",
+                      "\$${controller.totalPrice.toStringAsFixed(2)}",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

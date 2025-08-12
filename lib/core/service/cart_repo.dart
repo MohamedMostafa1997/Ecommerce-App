@@ -50,7 +50,11 @@ class CartRepo {
     await database.productDao.deleteAllMovies();
   }
 
-  double calculateTotalPrice(List<dynamic> cartItems) {
+  double calculateSingleProductTotal(Product product) {
+    return product.price * product.quantity;
+  }
+
+  double calculateTotalPrice(List<Product> cartItems) {
     return cartItems.fold(
       0.0,
       (sum, item) => sum + (item.price * item.quantity),

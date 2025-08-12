@@ -28,5 +28,8 @@ class CheckoutController extends GetxController {
     }
   }
 
+  double getSingleProductPrice(Product product) =>
+      cartRepo.calculateSingleProductTotal(product);
+
   double get totalPrice => cartRepo.calculateTotalPrice(cartItems);
 }
