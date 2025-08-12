@@ -1,14 +1,16 @@
-import 'package:ecommerce_app/models/data_base/database.dart';
+import 'package:ecommerce_app/core/utils/route_names.dart';
 import 'package:ecommerce_app/core/service/cart_repo.dart';
-import 'package:ecommerce_app/screens/cart/cart_screen.dart';
-import 'package:ecommerce_app/screens/checkout/cheakout_screen.dart';
-import 'package:ecommerce_app/screens/launch/launch.dart';
-import 'package:ecommerce_app/screens/login/login_screen.dart';
-import 'package:ecommerce_app/screens/product_details/product_details_repo.dart';
-import 'package:ecommerce_app/screens/product_details/product_details_screen.dart';
-import 'package:ecommerce_app/screens/products/products_screen.dart';
-import 'package:ecommerce_app/utils/route_names.dart';
+import 'package:ecommerce_app/database/database.dart';
+import 'package:ecommerce_app/features/cart/cart_screen.dart';
+import 'package:ecommerce_app/features/checkout/checkout_screen.dart';
+import 'package:ecommerce_app/features/launch/launch_screen.dart';
+import 'package:ecommerce_app/features/login/login_screen.dart';
+import 'package:ecommerce_app/features/product_details/product_details_repo.dart';
+import 'package:ecommerce_app/features/product_details/product_details_screen.dart';
+import 'package:ecommerce_app/features/products/products_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartRepo cartRepo = CartRepo(database);
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
         progressIndicatorTheme: ProgressIndicatorThemeData(
           color: Colors.grey[500],
@@ -33,17 +35,45 @@ class App extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: RouteNames.init,
-      routes: {
-        RouteNames.init: (context) => LaunchScreen(),
-        RouteNames.login: (context) => LoginScreen(),
-        RouteNames.products: (context) => ProductsScreen(),
-        RouteNames.productDetails: (context) {
-          ProductDetailsRepo productDetailsRepo = ProductDetailsRepo(database);
-          return ProductDetailsScreen(productDetailsRepo: productDetailsRepo, cartRepo: cartRepo,);
-        },
-        RouteNames.cart: (context) => CartScreen(cartRepo: cartRepo),
-        RouteNames.cheakOut: (context) => CheckoutScreen(cartRepo: cartRepo,),
-      },
+      getPages: [
+        GetPage(name: RouteNames.init, page: () => LaunchScreen()),
+        GetPage(name: RouteNames.login, page: () => LoginScreen()),
+        GetPage(
+          name: RouteNames.products,
+          page: () => ProductsScreen(cartRepo: cartRepo),
+        ),
+        GetPage(
+          name: RouteNames.productDetails,
+          page: () {
+            ProductDetailsRepo productDetailsRepo = ProductDetailsRepo(
+              database,
+            );
+            return ProductDetailsScreen(
+              productDetailsRepo: productDetailsRepo,
+              cartRepo: cartRepo,
+            );
+          },
+        ),
+        GetPage(name: RouteNames.cart, page: () => CartScreen(cartRepo: cartRepo),),
+        GetPage(name: RouteNames.checkOut, page: () {
+          CartRepo cartRepo2 = CartRepo(database);
+          return CheckoutScreen(cartRepo: cartRepo2);
+        }),
+      ],
+      // routes: {
+      //   RouteNames.init: (context) => LaunchScreen(),
+      //   RouteNames.login: (context) => LoginScreen(),
+      //   RouteNames.products: (context) => ProductsScreen(cartRepo: cartRepo),
+      //   RouteNames.productDetails: (context) {
+      //     ProductDetailsRepo productDetailsRepo = ProductDetailsRepo(database);
+      //     return ProductDetailsScreen(
+      //       productDetailsRepo: productDetailsRepo,
+      //       cartRepo: cartRepo,
+      //     );
+      //   },
+      //   RouteNames.cart: (context) => CartScreen(cartRepo: cartRepo),
+      //   RouteNames.checkOut: (context) => CheckoutScreen(cartRepo: cartRepo),
+      // },
     );
   }
 }

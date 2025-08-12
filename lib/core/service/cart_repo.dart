@@ -1,5 +1,6 @@
-import 'package:ecommerce_app/models/data_base/database.dart';
-import 'package:ecommerce_app/models/entity/product.dart';
+import 'package:ecommerce_app/database/database.dart';
+import 'package:ecommerce_app/database/product_dao.dart';
+import 'package:ecommerce_app/features/products/entities/product.dart';
 
 class CartRepo {
   final ProductDatabase database;
@@ -43,6 +44,10 @@ class CartRepo {
 
   Future<void> removeItem(Product product) async {
     await database.productDao.deleteProduct(product);
+  }
+
+  Future<void> deleteAllProducts() async {
+    await database.productDao.deleteAllMovies();
   }
 
   double calculateTotalPrice(List<dynamic> cartItems) {
