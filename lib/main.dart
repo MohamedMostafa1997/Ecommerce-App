@@ -54,26 +54,18 @@ class App extends StatelessWidget {
             );
           },
         ),
-        GetPage(name: RouteNames.cart, page: () => CartScreen(cartRepo: cartRepo),),
-        GetPage(name: RouteNames.checkOut, page: () {
-          CartRepo cartRepo2 = CartRepo(database);
-          return CheckoutScreen(cartRepo: cartRepo2);
-        }),
+        GetPage(
+          name: RouteNames.cart,
+          page: () => CartScreen(cartRepo: cartRepo),
+        ),
+        GetPage(
+          name: RouteNames.checkOut,
+          page: () {
+            CartRepo cartRepo2 = CartRepo(database);
+            return CheckoutScreen(cartRepo: cartRepo2);
+          },
+        ),
       ],
-      // routes: {
-      //   RouteNames.init: (context) => LaunchScreen(),
-      //   RouteNames.login: (context) => LoginScreen(),
-      //   RouteNames.products: (context) => ProductsScreen(cartRepo: cartRepo),
-      //   RouteNames.productDetails: (context) {
-      //     ProductDetailsRepo productDetailsRepo = ProductDetailsRepo(database);
-      //     return ProductDetailsScreen(
-      //       productDetailsRepo: productDetailsRepo,
-      //       cartRepo: cartRepo,
-      //     );
-      //   },
-      //   RouteNames.cart: (context) => CartScreen(cartRepo: cartRepo),
-      //   RouteNames.checkOut: (context) => CheckoutScreen(cartRepo: cartRepo),
-      // },
     );
   }
 }

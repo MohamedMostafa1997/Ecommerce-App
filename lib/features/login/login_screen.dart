@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: InputDecoration(
                 labelText: "Username",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             backgroundColor: Colors.pinkAccent,
                             padding: EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(30),
                             ),
                           ),
                           child: Text(
