@@ -17,20 +17,23 @@ class ProductDetailsController extends GetxController {
 
   final RxString errorMessage = "".obs;
 
-  Future<void> fetchSingleProduct(int id) async {
+  Future<void> fetchSingleProduct(productID) async {
     isLoading.value = true;
     errorMessage.value = '';
 
-    final result = await productDetailsRepo.getSingleProduct(id);
+    final result = await productDetailsRepo.getSingleProduct(productID);
 
     if (result['success'] == true) {
       product.value = result['data'];
-      isInCart.value = await cartRepo.isProductInCart(product.value!.id);
     } else {
       errorMessage.value = result['message'];
     }
 
     isLoading.value = false;
+  }
+
+  Future<void> setIsInCartStatus(int productID) async {
+    isInCart.value = await cartRepo.isProductInCart(productID);
   }
 
   Future<void> addToCart(product) async {

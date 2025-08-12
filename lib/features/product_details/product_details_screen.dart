@@ -38,6 +38,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     if (args != null && args is int) {
       productId = args;
       controller.fetchSingleProduct(productId!);
+      controller.setIsInCartStatus(productId!);
     } else {
       ScaffoldMessenger.of(
         context,

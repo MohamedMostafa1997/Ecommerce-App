@@ -95,7 +95,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   onRetry: controller.fetchProducts,
                 );
               }
-              if (controller.filteredProducts.isEmpty) {
+
+              final List productsToShow =
+                  searchController.text.isEmpty
+                      ? controller.allProducts
+                      :controller.filteredProducts;
+                      
+              if (productsToShow.isEmpty) {
                 return Center(child: Text("No products found."));
               }
 
@@ -107,9 +113,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   mainAxisSpacing: 8,
                   childAspectRatio: 0.7,
                 ),
-                itemCount: controller.filteredProducts.length,
+                itemCount: productsToShow.length,
                 itemBuilder: (context, index) {
-                  final Product product = controller.filteredProducts[index];
+                  final Product product = productsToShow[index];
                   return GestureDetector(
                     onTap: () => goToDetails(product.id),
                     child: Card(

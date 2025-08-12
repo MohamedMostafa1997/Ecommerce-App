@@ -12,7 +12,7 @@ class LaunchScreen extends StatefulWidget {
 class _LaunchScreenState extends State<LaunchScreen> {
   Future<bool> checkLoginStatus() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
+    final bool isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
 
     if (mounted) {
       if (isLoggedIn) {
