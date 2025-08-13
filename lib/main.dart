@@ -1,19 +1,14 @@
 import 'package:ecommerce_app/core/dependency_injection/dependency_injection.dart';
 import 'package:ecommerce_app/core/utils/route_names.dart';
-import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/database/database.dart';
 import 'package:ecommerce_app/features/cart/cart_screen.dart';
 import 'package:ecommerce_app/features/checkout/checkout_screen.dart';
 import 'package:ecommerce_app/features/launch/launch_screen.dart';
 import 'package:ecommerce_app/features/login/login_screen.dart';
-import 'package:ecommerce_app/features/product_details/product_details_repo.dart';
 import 'package:ecommerce_app/features/product_details/product_details_screen.dart';
 import 'package:ecommerce_app/features/products/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -32,10 +27,7 @@ void main() async {
     GetMaterialApp(
       initialRoute: RouteNames.init,
       getPages: [
-        GetPage(
-          name: RouteNames.init,
-          page: () => LaunchScreen(),
-        ),
+        GetPage(name: RouteNames.init, page: () => LaunchScreen()),
         GetPage(
           name: RouteNames.login,
           page: () => LoginScreen(),

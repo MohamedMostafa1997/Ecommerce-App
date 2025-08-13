@@ -1,12 +1,9 @@
-import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/features/product_details/product_details_controller.dart';
-import 'package:ecommerce_app/features/product_details/product_details_repo.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-
   const ProductDetailsScreen({super.key});
 
   @override
@@ -16,8 +13,6 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int? productId;
   final ProductDetailsController controller = Get.find();
-
- 
 
   @override
   void didChangeDependencies() {

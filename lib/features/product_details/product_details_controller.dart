@@ -7,7 +7,6 @@ class ProductDetailsController extends GetxController {
   final CartRepo cartRepo = Get.find();
   final ProductDetailsRepo productDetailsRepo = Get.find();
 
-
   final Rxn<Product> product = Rxn<Product>(null);
 
   final RxBool isLoading = false.obs;

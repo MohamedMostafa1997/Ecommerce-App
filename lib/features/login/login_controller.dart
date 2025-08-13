@@ -23,10 +23,13 @@ class LoginController extends GetxController {
     isLoading.value = true;
     errorMessage.value = "";
 
-    final LoginRequest loginRequest = LoginRequest(username: username, password: password); 
+    final LoginRequest loginRequest = LoginRequest(
+      username: username,
+      password: password,
+    );
 
     final Map<String, dynamic> result = await _loginRepo.loginAndCacheUser(
-      loginRequest
+      loginRequest,
     );
 
     isLoading.value = false;
@@ -35,7 +38,6 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
-    print('object');
     usernameController.dispose();
     passwordController.dispose();
 

@@ -40,8 +40,8 @@ class ProductsController extends GetxController {
       isSearching.value = false;
     } else {
       filteredProducts.assignAll(
-        allProducts.where((product) =>
-          product.name.toLowerCase().contains(item.toLowerCase())
+        allProducts.where(
+          (product) => product.name.toLowerCase().contains(item.toLowerCase()),
         ),
       );
 

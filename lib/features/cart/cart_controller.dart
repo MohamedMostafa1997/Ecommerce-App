@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 class CartController extends GetxController {
   final CartRepo cartRepo = Get.find();
 
-
   RxList cartItems = <Product>[].obs;
   RxBool isLoading = false.obs;
   RxString errorMessage = ''.obs;

@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/core/utils/route_names.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:ecommerce_app/features/products/products_controller.dart';
@@ -92,7 +91,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 );
               }
 
-              final List productsToShow =
+              final List<Product> productsToShow =
                   controller.isSearching.value
                       ? controller.filteredProducts
                       : controller.allProducts;

@@ -12,16 +12,17 @@ class LaunchScreen extends StatefulWidget {
 
 class _LaunchScreenState extends State<LaunchScreen> {
   Future<bool> checkLoginStatus() async {
-    final SharedPreferences prefs = Get.find() ;
+    final SharedPreferences prefs = Get.find();
     final bool isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
- WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (mounted) {
-      if (isLoggedIn) {
-        Navigator.pushReplacementNamed(context, RouteNames.products);
-      } else {
-        Navigator.pushReplacementNamed(context, RouteNames.login);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        if (isLoggedIn) {
+          Navigator.pushReplacementNamed(context, RouteNames.products);
+        } else {
+          Navigator.pushReplacementNamed(context, RouteNames.login);
+        }
       }
-    }  } );
+    });
 
     return isLoggedIn;
   }

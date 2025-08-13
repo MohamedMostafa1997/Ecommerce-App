@@ -54,15 +54,12 @@ class _$ProductDatabaseBuilder implements $ProductDatabaseBuilderContract {
 
   @override
   Future<ProductDatabase> build() async {
-    final path = name != null
-        ? await sqfliteDatabaseFactory.getDatabasePath(name!)
-        : ':memory:';
+    final path =
+        name != null
+            ? await sqfliteDatabaseFactory.getDatabasePath(name!)
+            : ':memory:';
     final database = _$ProductDatabase();
-    database.database = await database.open(
-      path,
-      _migrations,
-      _callback,
-    );
+    database.database = await database.open(path, _migrations, _callback);
     return database;
   }
 }
@@ -90,13 +87,18 @@ class _$ProductDatabase extends ProductDatabase {
       },
       onUpgrade: (database, startVersion, endVersion) async {
         await MigrationAdapter.runMigrations(
-            database, startVersion, endVersion, migrations);
+          database,
+          startVersion,
+          endVersion,
+          migrations,
+        );
 
         await callback?.onUpgrade?.call(database, startVersion, endVersion);
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Product` (`id` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `image` TEXT NOT NULL, `category` TEXT NOT NULL, `description` TEXT NOT NULL, `rating` TEXT NOT NULL, PRIMARY KEY (`id`))');
+          'CREATE TABLE IF NOT EXISTS `Product` (`id` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `image` TEXT NOT NULL, `category` TEXT NOT NULL, `description` TEXT NOT NULL, `rating` TEXT NOT NULL, PRIMARY KEY (`id`))',
+        );
 
         await callback?.onCreate?.call(database, version);
       },
@@ -111,51 +113,52 @@ class _$ProductDatabase extends ProductDatabase {
 }
 
 class _$ProductDao extends ProductDao {
-  _$ProductDao(
-    this.database,
-    this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database),
-        _productInsertionAdapter = InsertionAdapter(
-            database,
-            'Product',
-            (Product item) => <String, Object?>{
-                  'id': item.id,
-                  'quantity': item.quantity,
-                  'name': item.name,
-                  'price': item.price,
-                  'image': item.image,
-                  'category': item.category,
-                  'description': item.description,
-                  'rating': _ratingConverter.encode(item.rating)
-                }),
-        _productUpdateAdapter = UpdateAdapter(
-            database,
-            'Product',
-            ['id'],
-            (Product item) => <String, Object?>{
-                  'id': item.id,
-                  'quantity': item.quantity,
-                  'name': item.name,
-                  'price': item.price,
-                  'image': item.image,
-                  'category': item.category,
-                  'description': item.description,
-                  'rating': _ratingConverter.encode(item.rating)
-                }),
-        _productDeletionAdapter = DeletionAdapter(
-            database,
-            'Product',
-            ['id'],
-            (Product item) => <String, Object?>{
-                  'id': item.id,
-                  'quantity': item.quantity,
-                  'name': item.name,
-                  'price': item.price,
-                  'image': item.image,
-                  'category': item.category,
-                  'description': item.description,
-                  'rating': _ratingConverter.encode(item.rating)
-                });
+  _$ProductDao(this.database, this.changeListener)
+    : _queryAdapter = QueryAdapter(database),
+      _productInsertionAdapter = InsertionAdapter(
+        database,
+        'Product',
+        (Product item) => <String, Object?>{
+          'id': item.id,
+          'quantity': item.quantity,
+          'name': item.name,
+          'price': item.price,
+          'image': item.image,
+          'category': item.category,
+          'description': item.description,
+          'rating': _ratingConverter.encode(item.rating),
+        },
+      ),
+      _productUpdateAdapter = UpdateAdapter(
+        database,
+        'Product',
+        ['id'],
+        (Product item) => <String, Object?>{
+          'id': item.id,
+          'quantity': item.quantity,
+          'name': item.name,
+          'price': item.price,
+          'image': item.image,
+          'category': item.category,
+          'description': item.description,
+          'rating': _ratingConverter.encode(item.rating),
+        },
+      ),
+      _productDeletionAdapter = DeletionAdapter(
+        database,
+        'Product',
+        ['id'],
+        (Product item) => <String, Object?>{
+          'id': item.id,
+          'quantity': item.quantity,
+          'name': item.name,
+          'price': item.price,
+          'image': item.image,
+          'category': item.category,
+          'description': item.description,
+          'rating': _ratingConverter.encode(item.rating),
+        },
+      );
 
   final sqflite.DatabaseExecutor database;
 
@@ -171,8 +174,10 @@ class _$ProductDao extends ProductDao {
 
   @override
   Future<List<Product>> getProduct() async {
-    return _queryAdapter.queryList('SELECT * FROM Product',
-        mapper: (Map<String, Object?> row) => Product(
+    return _queryAdapter.queryList(
+      'SELECT * FROM Product',
+      mapper:
+          (Map<String, Object?> row) => Product(
             id: row['id'] as int,
             quantity: row['quantity'] as int,
             name: row['name'] as String,
@@ -180,17 +185,17 @@ class _$ProductDao extends ProductDao {
             category: row['category'] as String,
             description: row['description'] as String,
             image: row['image'] as String,
-            rating: _ratingConverter.decode(row['rating'] as String)));
+            rating: _ratingConverter.decode(row['rating'] as String),
+          ),
+    );
   }
 
   @override
-  Future<void> updateQuantity(
-    int id,
-    int quantity,
-  ) async {
+  Future<void> updateQuantity(int id, int quantity) async {
     await _queryAdapter.queryNoReturn(
-        'UPDATE Product SET quantity = ?2 WHERE id = ?1',
-        arguments: [id, quantity]);
+      'UPDATE Product SET quantity = ?2 WHERE id = ?1',
+      arguments: [id, quantity],
+    );
   }
 
   @override

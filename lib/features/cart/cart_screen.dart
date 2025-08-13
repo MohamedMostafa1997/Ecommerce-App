@@ -1,14 +1,11 @@
 import 'package:ecommerce_app/core/utils/route_names.dart';
 import 'package:ecommerce_app/features/cart/cart_controller.dart';
-import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/features/cart/widgets/cart_item_widget.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 
 class CartScreen extends StatefulWidget {
-  
   const CartScreen({super.key});
 
   @override
