@@ -1,11 +1,10 @@
 import 'package:ecommerce_app/database/database.dart';
 import 'package:ecommerce_app/database/product_dao.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
+import 'package:get/get.dart';
 
 class CartRepo {
-  final ProductDatabase database;
-
-  CartRepo(this.database);
+  final ProductDatabase database = Get.find();
 
   Future<void> insertToDatabase(Product product) async {
     await database.productDao.insertProduct(

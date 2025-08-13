@@ -4,25 +4,23 @@ import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/features/cart/widgets/cart_item_widget.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 
 class CartScreen extends StatefulWidget {
-  final CartRepo cartRepo;
-  const CartScreen({super.key, required this.cartRepo});
+  
+  const CartScreen({super.key});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  late final CartController controller;
+  final CartController controller = Get.find();
 
   @override
   void initState() {
     super.initState();
-
-    controller = CartController(widget.cartRepo);
-
     controller.fetchCartItems();
   }
 

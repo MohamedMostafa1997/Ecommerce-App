@@ -4,10 +4,9 @@ import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsController extends GetxController {
-  final CartRepo cartRepo;
-  final ProductDetailsRepo productDetailsRepo;
+  final CartRepo cartRepo = Get.find();
+  final ProductDetailsRepo productDetailsRepo = Get.find();
 
-  ProductDetailsController(this.productDetailsRepo, this.cartRepo);
 
   final Rxn<Product> product = Rxn<Product>(null);
 

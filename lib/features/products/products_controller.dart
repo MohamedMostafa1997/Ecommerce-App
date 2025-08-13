@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductsController extends GetxController {
-  final ProductsRepo productRepo = ProductsRepo();
-  final CartRepo cartRepo;
-
-  ProductsController(this.cartRepo );
+  final ProductsRepo productRepo = Get.find();
+  final CartRepo cartRepo = Get.find();
 
   final RxBool isLoading = false.obs;
+
+  final RxBool isSearching = false.obs;
 
   final RxString errorMessage = "".obs;
 
@@ -27,7 +27,8 @@ class ProductsController extends GetxController {
     if (result['success'] == true) {
       final List<Product> products = result["data"];
       allProducts.assignAll(products);
-      filteredProducts.assignAll(products);
+      filteredProducts.clear();
+      isSearching.value = false;
     } else {
       errorMessage.value = result['message'];
     }
@@ -35,19 +36,20 @@ class ProductsController extends GetxController {
 
   void filterProduct(String item) {
     if (item.isEmpty) {
-      filteredProducts.assignAll(allProducts);
+      filteredProducts.clear();
+      isSearching.value = false;
     } else {
-      final List<Product> filtered =
-          allProducts.where((product) {
-            return product.name.toLowerCase().contains(item.toLowerCase());
-          }).toList();
-          
-      filteredProducts.assignAll(filtered);
+      filteredProducts.assignAll(
+        allProducts.where((product) =>
+          product.name.toLowerCase().contains(item.toLowerCase())
+        ),
+      );
+
+      isSearching.value = true;
     }
   }
 
   Future<void> clearCache() async {
-
     await cartRepo.deleteAllProducts();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();

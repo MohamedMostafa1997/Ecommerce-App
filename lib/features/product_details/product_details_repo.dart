@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:ecommerce_app/core/utils/api_end_points.dart';
 import 'package:ecommerce_app/database/database.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
+import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
 
 class ProductDetailsRepo {
-  final ProductDatabase database;
-  ProductDetailsRepo(this.database);
+  final ProductDatabase database = Get.find();
+
   Future<Map<String, dynamic>> getSingleProduct(int id) async {
     try {
       final response = await http.get(

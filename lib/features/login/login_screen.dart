@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final LoginController controller = Get.put(LoginController());
+  final LoginController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

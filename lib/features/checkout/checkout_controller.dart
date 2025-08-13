@@ -1,10 +1,11 @@
 import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 
 class CheckoutController extends GetxController {
-  final CartRepo cartRepo;
-  CheckoutController(this.cartRepo);
+  final CartRepo cartRepo = Get.find();
+
 
   RxList<Product> cartItems = <Product>[].obs;
   RxBool isLoading = false.obs;

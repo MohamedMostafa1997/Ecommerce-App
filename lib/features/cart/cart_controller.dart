@@ -3,9 +3,8 @@ import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
-  final CartRepo cartRepo;
+  final CartRepo cartRepo = Get.find();
 
-  CartController(this.cartRepo);
 
   RxList cartItems = <Product>[].obs;
   RxBool isLoading = false.obs;

@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 class LoginController extends GetxController {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final LoginRepo _loginRepo = LoginRepo();
+
+  final LoginRepo _loginRepo = Get.find();
 
   RxBool isLoading = false.obs;
   RxString errorMessage = "".obs;

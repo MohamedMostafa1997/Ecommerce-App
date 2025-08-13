@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/core/utils/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LaunchScreen extends StatefulWidget {
@@ -11,16 +12,16 @@ class LaunchScreen extends StatefulWidget {
 
 class _LaunchScreenState extends State<LaunchScreen> {
   Future<bool> checkLoginStatus() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = Get.find() ;
     final bool isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
-
+ WidgetsBinding.instance.addPostFrameCallback((_) {
     if (mounted) {
       if (isLoggedIn) {
         Navigator.pushReplacementNamed(context, RouteNames.products);
       } else {
         Navigator.pushReplacementNamed(context, RouteNames.login);
       }
-    }
+    }  } );
 
     return isLoggedIn;
   }

@@ -5,20 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  final CartRepo cartRepo;
-  const CheckoutScreen({super.key, required this.cartRepo});
+  const CheckoutScreen({super.key});
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  late final CheckoutController controller;
+  final CheckoutController controller = Get.find();
   @override
   void initState() {
     super.initState();
-
-    controller = CheckoutController(widget.cartRepo);
     controller.fetchCheckoutItems();
   }
 

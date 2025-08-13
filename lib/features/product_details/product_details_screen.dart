@@ -6,13 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  final ProductDetailsRepo productDetailsRepo;
-  final CartRepo cartRepo;
-  const ProductDetailsScreen({
-    super.key,
-    required this.productDetailsRepo,
-    required this.cartRepo,
-  });
+
+  const ProductDetailsScreen({super.key});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -20,16 +15,9 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int? productId;
-  late final ProductDetailsController controller;
+  final ProductDetailsController controller = Get.find();
 
-  @override
-  void initState() {
-    controller = ProductDetailsController(
-      widget.productDetailsRepo,
-      widget.cartRepo,
-    );
-    super.initState();
-  }
+ 
 
   @override
   void didChangeDependencies() {

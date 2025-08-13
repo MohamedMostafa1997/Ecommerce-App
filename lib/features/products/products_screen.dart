@@ -7,23 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductsScreen extends StatefulWidget {
-  final CartRepo cartRepo;
-
-  const ProductsScreen({super.key, required this.cartRepo});
+  const ProductsScreen({super.key});
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  late final ProductsController controller;
+  final ProductsController controller = Get.find();
   final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-
-    controller = Get.put(ProductsController(widget.cartRepo));
     controller.fetchProducts();
   }
 
@@ -97,10 +93,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
               }
 
               final List productsToShow =
-                  searchController.text.isEmpty
-                      ? controller.allProducts
-                      :controller.filteredProducts;
-                      
+                  controller.isSearching.value
+                      ? controller.filteredProducts
+                      : controller.allProducts;
+
               if (productsToShow.isEmpty) {
                 return Center(child: Text("No products found."));
               }
