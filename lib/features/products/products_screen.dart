@@ -96,10 +96,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 );
               }
 
-              final List productsToShow =
-                  searchController.text.isEmpty
-                      ? controller.allProducts
-                      :controller.filteredProducts;
+              final List <Product> productsToShow =
+                  controller.isSearching.value
+                      ? controller.filteredProducts
+                      :controller.allProducts;
                       
               if (productsToShow.isEmpty) {
                 return Center(child: Text("No products found."));

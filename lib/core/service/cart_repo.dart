@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/database/database.dart';
-import 'package:ecommerce_app/database/product_dao.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 
 class CartRepo {
