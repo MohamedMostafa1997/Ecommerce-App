@@ -1,9 +1,9 @@
+import 'package:ecommerce_app/core/dependency_injection/dependency_injection.dart';
 import 'package:ecommerce_app/database/database.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
-import 'package:get/get.dart';
 
 class CartRepo {
-  final ProductDatabase database = Get.find();
+  final ProductDatabase database = sl<ProductDatabase>();
 
   Future<void> insertToDatabase(Product product) async {
     await database.productDao.insertProduct(

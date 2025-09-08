@@ -1,15 +1,15 @@
-import 'package:ecommerce_app/features/cart/cart_controller.dart';
+import 'package:ecommerce_app/features/cart/cubit/cart_cubit.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:flutter/material.dart';
 
 class CartItemWidget extends StatelessWidget {
   final Product product;
-  final CartController controller;
+  final CartCubit cartCubit;
 
   const CartItemWidget({
     super.key,
     required this.product,
-    required this.controller,
+    required this.cartCubit,
   });
 
   @override
@@ -31,19 +31,19 @@ class CartItemWidget extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () => controller.decreaseQuantity(product),
+                  onPressed: () => cartCubit.decreaseQuantity(product),
                   icon: Icon(Icons.remove_circle_outline),
                 ),
                 Text("${product.quantity}"),
                 IconButton(
-                  onPressed: () => controller.increaseQuantity(product),
+                  onPressed: () => cartCubit.increaseQuantity(product),
                   icon: Icon(Icons.add_circle_outline),
                 ),
               ],
             ),
             IconButton(
               icon: Icon(Icons.close, color: Colors.red),
-              onPressed: () => controller.removeItem(product),
+              onPressed: () => cartCubit.removeItem(product),
             ),
           ],
         ),

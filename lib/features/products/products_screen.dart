@@ -1,9 +1,9 @@
 import 'package:ecommerce_app/core/utils/route_names.dart';
+import 'package:ecommerce_app/features/products/cubit/products_cubit.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
-import 'package:ecommerce_app/features/products/products_controller.dart';
 import 'package:ecommerce_app/features/products/widgets/error_products.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -13,17 +13,16 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  final ProductsController controller = Get.find();
   final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    controller.fetchProducts();
+    context.read<ProductsCubit>().fetchProducts();
   }
 
   void logout() async {
-    await controller.clearCache();
+    await context.read<ProductsCubit>().clearCache();
 
     if (mounted) {
       Navigator.pushReplacementNamed(context, RouteNames.login);
@@ -76,76 +75,79 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
-              onChanged: controller.filterProduct,
+              onChanged: (value) {
+                context.read<ProductsCubit>().filterProducts(value);
+              },
             ),
           ),
           Expanded(
-            child: Obx(() {
-              if (controller.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
-              }
-              if (controller.errorMessage.isNotEmpty) {
-                return ErrorProducts(
-                  message: controller.errorMessage.value,
-                  onRetry: controller.fetchProducts,
-                );
-              }
-
-              final List<Product> productsToShow =
-                  controller.isSearching.value
-                      ? controller.filteredProducts
-                      : controller.allProducts;
-
-              if (productsToShow.isEmpty) {
-                return Center(child: Text("No products found."));
-              }
-
-              return GridView.builder(
-                padding: EdgeInsets.all(8),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 0.7,
-                ),
-                itemCount: productsToShow.length,
-                itemBuilder: (context, index) {
-                  final Product product = productsToShow[index];
-                  return GestureDetector(
-                    onTap: () => goToDetails(product.id),
-                    child: Card(
-                      elevation: 4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: Image.network(
-                              product.image,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Text(
-                              product.name,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text(
-                              '\$${product.price.toStringAsFixed(2)}',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+            child: BlocBuilder<ProductsCubit, ProductsState>(
+              builder: (context, state) {
+                if (state is ProductsLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is ProductsError) {
+                  return ErrorProducts(
+                    message: state.message,
+                    onRetry:
+                        () => context.read<ProductsCubit>().fetchProducts(),
                   );
-                },
-              );
-            }),
+                } else if (state is ProductsLoaded) {
+                  final List<Product> products = state.products;
+                  if (products.isEmpty) {
+                    return Center(child: Text("No products found."));
+                  }
+
+                  return GridView.builder(
+                    padding: EdgeInsets.all(8),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                      childAspectRatio: 0.7,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final Product product = products[index];
+                      return GestureDetector(
+                        onTap: () => goToDetails(product.id),
+                        child: Card(
+                          elevation: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                child: Image.network(
+                                  product.image,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Text(
+                                  product.name,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  '\$${product.price.toStringAsFixed(2)}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
           ),
         ],
       ),

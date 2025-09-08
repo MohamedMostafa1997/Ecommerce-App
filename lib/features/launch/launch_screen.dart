@@ -1,6 +1,6 @@
+import 'package:ecommerce_app/core/dependency_injection/dependency_injection.dart';
 import 'package:ecommerce_app/core/utils/route_names.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LaunchScreen extends StatefulWidget {
@@ -12,7 +12,7 @@ class LaunchScreen extends StatefulWidget {
 
 class _LaunchScreenState extends State<LaunchScreen> {
   Future<bool> checkLoginStatus() async {
-    final SharedPreferences prefs = Get.find();
+    final prefs = sl<SharedPreferences>(); 
     final bool isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
