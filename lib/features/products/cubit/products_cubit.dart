@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:ecommerce_app/features/products/products_repo.dart';
-import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'products_state.dart';

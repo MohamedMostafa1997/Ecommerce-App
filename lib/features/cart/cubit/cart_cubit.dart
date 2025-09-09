@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
-import 'package:meta/meta.dart';
 
 part 'cart_state.dart';
 
@@ -12,7 +11,7 @@ class CartCubit extends Cubit<CartState> {
   Future<void> fetchCartItems() async {
     emit(CartLoading());
     try {
-      final items = await cartRepo.fetchCartItems();
+      final List<Product> items = await cartRepo.fetchCartItems();
       if (items.isEmpty){
         emit(CartError("No Product Items Found"));
       }else {

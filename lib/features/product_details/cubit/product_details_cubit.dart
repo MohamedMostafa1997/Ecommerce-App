@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/features/product_details/product_details_repo.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
-import 'package:meta/meta.dart';
 
 part 'product_details_state.dart';
 
@@ -16,7 +15,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   Future<void> fetchSingleProduct(int productID) async {
     emit(ProductDetailsLoading());
 
-    final result  = await productDetailsRepo.getSingleProduct(productID);
+    final Map<String, dynamic> result  = await productDetailsRepo.getSingleProduct(productID);
 
     if (result['success'] == true) {
       final Product product = result['data'];
@@ -44,7 +43,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
 
   Future<void> toggleCart(Product product) async {
     if (state is ProductDetailsLoaded){
-      final current = state as ProductDetailsLoaded;
+      final ProductDetailsLoaded current = state as ProductDetailsLoaded;
       if(current.isInCart){
         await cartRepo.removeItem(product);
         emit(ProductDetailsLoaded(product: product, isInCart: false));

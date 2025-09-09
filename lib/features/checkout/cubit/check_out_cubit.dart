@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/core/service/cart_repo.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
-import 'package:meta/meta.dart';
 
 part 'check_out_state.dart';
 
