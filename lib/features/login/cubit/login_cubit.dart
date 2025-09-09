@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/features/login/login_repo.dart';
 import 'package:ecommerce_app/features/login/models/login_request.dart';
-import 'package:meta/meta.dart';
 
 part 'login_state.dart';
 
@@ -13,6 +12,8 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login(String username, String password) async {
     if (username.isEmpty || password.isEmpty) {
       emit(LoginFailure('Please fill all fields'));
+      return; 
+
     }
 
     emit(LoginLoading());
