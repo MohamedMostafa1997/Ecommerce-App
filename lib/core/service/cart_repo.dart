@@ -1,5 +1,5 @@
+import 'package:ecommerce_app/core/database/database.dart';
 import 'package:ecommerce_app/core/dependency_injection/dependency_injection.dart';
-import 'package:ecommerce_app/database/database.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 
 class CartRepo {
@@ -45,7 +45,7 @@ class CartRepo {
   }
 
   Future<void> deleteAllProducts() async {
-    await database.productDao.deleteAllMovies();
+    await database.productDao.deleteAllProducts();
   }
 
   double calculateSingleProductTotal(Product product) {

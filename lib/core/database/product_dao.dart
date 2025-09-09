@@ -10,7 +10,7 @@ abstract class ProductDao {
   Future<void> updateQuantity(int id, int quantity);
 
   @Query('DELETE FROM Product')
-  Future<void> deleteAllMovies();
+  Future<void> deleteAllProducts();
 
   @insert
   Future<void> insertProduct(Product product);

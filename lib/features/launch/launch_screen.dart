@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/core/dependency_injection/dependency_injection.dart';
-import 'package:ecommerce_app/core/utils/route_names.dart';
+import 'package:ecommerce_app/core/routing/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

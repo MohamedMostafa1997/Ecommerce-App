@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/core/utils/route_names.dart';
+import 'package:ecommerce_app/core/routing/route_names.dart';
 import 'package:ecommerce_app/features/cart/cubit/cart_cubit.dart';
 import 'package:ecommerce_app/features/cart/widgets/cart_item_widget.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';

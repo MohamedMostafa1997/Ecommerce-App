@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'package:ecommerce_app/core/database/database.dart';
 import 'package:ecommerce_app/core/dependency_injection/dependency_injection.dart';
 import 'package:ecommerce_app/core/utils/api_end_points.dart';
-import 'package:ecommerce_app/database/database.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 
 import 'package:http/http.dart' as http;

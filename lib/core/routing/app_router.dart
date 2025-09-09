@@ -1,5 +1,5 @@
+import 'package:ecommerce_app/core/routing/route_names.dart';
 import 'package:ecommerce_app/core/service/cart_repo.dart';
-import 'package:ecommerce_app/core/utils/route_names.dart';
 import 'package:ecommerce_app/features/cart/cart_screen.dart';
 import 'package:ecommerce_app/features/cart/cubit/cart_cubit.dart';
 import 'package:ecommerce_app/features/checkout/checkout_screen.dart';
@@ -15,7 +15,6 @@ import 'package:ecommerce_app/features/products/cubit/products_cubit.dart';
 import 'package:ecommerce_app/features/products/products_repo.dart';
 import 'package:ecommerce_app/features/products/products_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRouter {

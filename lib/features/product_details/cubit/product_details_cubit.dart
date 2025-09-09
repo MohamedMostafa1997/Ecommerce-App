@@ -20,9 +20,9 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
 
     if (result['success'] == true) {
       final Product product = result['data'];
-       final bool inCart = await cartRepo.isProductInCart(product.id);
+       final bool isInCart = await cartRepo.isProductInCart(product.id);
 
-      emit(ProductDetailsLoaded(product: product, isInCart: inCart));
+      emit(ProductDetailsLoaded(product: product, isInCart: isInCart));
     }else{
       emit(ProductDetailsError(result['message']));
     }
@@ -31,8 +31,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   Future<void> setIsInCartStatus(int productID) async {
     if(state is ProductDetailsLoaded){
       final current = state as ProductDetailsLoaded;
-      final bool inCart = await cartRepo.isProductInCart(productID);
-      emit(ProductDetailsLoaded(product: current.product, isInCart: inCart));
+      final bool isInCart = await cartRepo.isProductInCart(productID);
+      emit(ProductDetailsLoaded(product: current.product, isInCart: isInCart));
     }
   }
 

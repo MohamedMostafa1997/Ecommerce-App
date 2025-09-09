@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/core/utils/route_names.dart';
+import 'package:ecommerce_app/core/routing/route_names.dart';
 import 'package:ecommerce_app/features/login/cubit/login_cubit.dart';
 import 'package:ecommerce_app/features/login/widgets/login_error_dialog.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:ecommerce_app/database/product_dao.dart';
+import 'package:ecommerce_app/core/database/product_dao.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:ecommerce_app/features/products/entities/rating_converter.dart';
 import 'package:floor/floor.dart';

@@ -199,7 +199,7 @@ class _$ProductDao extends ProductDao {
   }
 
   @override
-  Future<void> deleteAllMovies() async {
+  Future<void> deleteAllProducts() async {
     await _queryAdapter.queryNoReturn('DELETE FROM Product');
   }
 
