@@ -20,16 +20,18 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     context.read<CartCubit>().setIsInCartStatus(widget.productId);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Product Details",style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.pinkAccent,
-                          ) ),
+        title: Text(
+          "Product Details",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.pinkAccent,
+          ),
+        ),
       ),
       body: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
         builder: (context, state) {
@@ -70,7 +72,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         SizedBox(height: 8),
                         Text(
                           '\$${product.price}',
-                          style:  TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.pinkAccent,
@@ -116,20 +118,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         SizedBox(height: 50),
                         BlocBuilder<CartCubit, CartState>(
-                          builder: (context, cartState) {
+                          buildWhen: (previous, current) => current is CartItemStatus,
+                          builder: (context, CartState cartState) {
                             bool isInCart = false;
-                            if (cartState is CartItemStatus &&
-                                cartState.productId == product.id) {
+                            if (cartState is CartItemStatus) {
                               isInCart = cartState.isInCart;
                             }
+
                             return SizedBox(
                               width: double.infinity,
                               height: 50,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: isInCart
-                                      ? Colors.grey
-                                      : Colors.pinkAccent,
+                                  backgroundColor:
+                                      isInCart
+                                          ? Colors.grey
+                                          : Colors.pinkAccent,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30),
                                   ),
@@ -139,7 +143,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 },
                                 child: Text(
                                   isInCart ? "Added" : "Add to Cart",
-                                  style:  TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
                                   ),
@@ -156,10 +160,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             );
           }
 
-          return  SizedBox();
+          return SizedBox();
         },
       ),
     );
   }
 }
-                       
