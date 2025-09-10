@@ -47,12 +47,16 @@ class AppRouter {
         final productId = settings.arguments as int?;
         return MaterialPageRoute(
           builder:
-              (_) => BlocProvider(
-                create:
-                    (_) => ProductDetailsCubit(
-                      productDetailsRepo: ProductDetailsRepo(),
-                      cartRepo: CartRepo(),
-                    ),
+              (_) => MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create:
+                        (_) => ProductDetailsCubit(
+                          productDetailsRepo: ProductDetailsRepo(),
+                        ),
+                  ),
+                  BlocProvider(create: (_) => CartCubit(cartRepo: CartRepo())),
+                ],
                 child: ProductDetailsScreen(productId: productId!),
               ),
         );
@@ -65,11 +69,13 @@ class AppRouter {
               ),
         );
       case RouteNames.checkOut:
-      return MaterialPageRoute(
-        builder: (_)=> BlocProvider(
-          create: (_)=> CheckOutCubit(cartRepo: CartRepo()),
-          child: CheckoutScreen(),
-           ));  
+        return MaterialPageRoute(
+          builder:
+              (_) => BlocProvider(
+                create: (_) => CheckOutCubit(cartRepo: CartRepo()),
+                child: CheckoutScreen(),
+              ),
+        );
     }
     return null;
   }

@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/features/cart/cubit/cart_cubit.dart';
 import 'package:ecommerce_app/features/product_details/cubit/product_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,13 +17,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     super.initState();
 
     context.read<ProductDetailsCubit>().fetchSingleProduct(widget.productId);
-    context.read<ProductDetailsCubit>().setIsInCartStatus(widget.productId);
+    context.read<CartCubit>().setIsInCartStatus(widget.productId);
   }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Product Details",style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.pinkAccent,
+                          ) ),
+      ),
       body: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
         builder: (context, state) {
           if (state is ProductDetailsLoading) {
@@ -38,28 +46,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
             return Column(
               children: [
-                SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Icon(Icons.arrow_back),
-                        ),
-                        SizedBox(width: 16),
-                        Text(
-                          "Product Details",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.pinkAccent,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 Expanded(
                   child: SingleChildScrollView(
                     padding: EdgeInsets.all(16),
@@ -76,7 +62,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         SizedBox(height: 20),
                         Text(
                           product.name,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -84,14 +70,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         SizedBox(height: 8),
                         Text(
                           '\$${product.price}',
-                          style: const TextStyle(
+                          style:  TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.pinkAccent,
                           ),
                         ),
-                        SizedBox(height: 12),
-                        
                         SizedBox(height: 12),
                         Text(
                           product.description,
@@ -131,32 +115,38 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ],
                         ),
                         SizedBox(height: 50),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  state.isInCart
+                        BlocBuilder<CartCubit, CartState>(
+                          builder: (context, cartState) {
+                            bool isInCart = false;
+                            if (cartState is CartItemStatus &&
+                                cartState.productId == product.id) {
+                              isInCart = cartState.isInCart;
+                            }
+                            return SizedBox(
+                              width: double.infinity,
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: isInCart
                                       ? Colors.grey
                                       : Colors.pinkAccent,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  context.read<CartCubit>().toggleCart(product);
+                                },
+                                child: Text(
+                                  isInCart ? "Added" : "Add to Cart",
+                                  style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
-                            ),
-                            onPressed: () async {
-                             await context.read<ProductDetailsCubit>().toggleCart(
-                                product,
-                              );
-                            },
-                            child: Text(
-                              state.isInCart ? "Added" : "Add to Cart",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -165,9 +155,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ],
             );
           }
-          return SizedBox();
+
+          return  SizedBox();
         },
       ),
     );
   }
 }
+                       

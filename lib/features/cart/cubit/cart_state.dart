@@ -12,7 +12,7 @@ final class CartLoaded extends CartState {
   CartLoaded(this.cartItems);
 }
 
-final class CartError extends CartState{
+final class CartError extends CartState {
   final String message;
 
   CartError(this.message);
@@ -22,4 +22,11 @@ final class CartActionMessage extends CartState {
   final String message;
 
   CartActionMessage(this.message);
+}
+
+final class CartItemStatus extends CartState {
+  final int productId;
+  final bool isInCart;
+
+  CartItemStatus({required this.productId, required this.isInCart});
 }

@@ -8,9 +8,8 @@ final class ProductDetailsLoading  extends ProductDetailsInitial{}
 
 final class ProductDetailsLoaded  extends ProductDetailsInitial{
    final Product product ; 
-   final bool isInCart ;
 
-  ProductDetailsLoaded({required this.product, required this.isInCart}); 
+  ProductDetailsLoaded({required this.product}); 
 
 }
 
