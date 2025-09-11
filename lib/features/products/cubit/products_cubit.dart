@@ -25,10 +25,10 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsError(result['message']));
     }
   }
-
+  //TODO:
   void filterProducts(String query) {
     if (query.isEmpty) {
-      emit(ProductsLoaded(products: allProducts, isSearching: false));
+      emit(ProductsLoaded(products: allProducts));
     } else {
       final filterd =
           allProducts
@@ -38,13 +38,13 @@ class ProductsCubit extends Cubit<ProductsState> {
               )
               .toList();
 
-      emit(ProductsLoaded(products: filterd, isSearching: true));
+      emit(ProductsLoaded(products: filterd));
     }
   }
 
   Future<void> clearCache() async {
     await cartRepo.deleteAllProducts();
-    final prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
 }

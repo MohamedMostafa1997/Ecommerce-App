@@ -133,7 +133,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 8),
                                 child: Text(
                                   '\$${product.price.toStringAsFixed(2)}',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -145,7 +145,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     },
                   );
                 }
-                return const SizedBox();
+                return  SizedBox();
               },
             ),
           ),

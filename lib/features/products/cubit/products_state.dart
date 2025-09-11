@@ -8,9 +8,8 @@ final class ProductsLoading extends ProductsState {}
 
 final class ProductsLoaded extends ProductsState {
   final List<Product> products;
-  final bool isSearching;
 
-  ProductsLoaded({required this.products, this.isSearching = false});
+  ProductsLoaded({required this.products});
 }
 
 final class ProductsError extends ProductsState {
