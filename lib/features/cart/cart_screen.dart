@@ -42,6 +42,9 @@ class _CartScreenState extends State<CartScreen> {
             ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
+        buildWhen: (previous, current){
+          return current is! CartActionMessage;
+        },
         builder: (context, state) {
           if (state is CartLoading) {
             return Center(child: CircularProgressIndicator());
@@ -67,6 +70,7 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
                 SizedBox(height: 20),
+                //TODO : Extracte form column
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 24),
                   child: SizedBox(

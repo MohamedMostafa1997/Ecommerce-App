@@ -3,6 +3,7 @@ import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:flutter/material.dart';
 
 class CartItemWidget extends StatelessWidget {
+  //TODO: remove constractor
   final Product product;
   final CartCubit cartCubit;
 

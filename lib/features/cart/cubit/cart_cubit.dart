@@ -33,7 +33,7 @@ class CartCubit extends Cubit<CartState> {
       await fetchCartItems();
     } else {
       emit(CartActionMessage("Can't decrease quantity"));
-      await fetchCartItems();
+   
     }
   }
 
