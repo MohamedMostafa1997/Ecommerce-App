@@ -107,7 +107,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         ),
                         Text(
-                            "\$${context.read<CheckOutCubit>().totalPrice.toStringAsFixed(2)}",
+                            "\$${context.read<CheckOutCubit>().getTotalPrice(cartItems).toStringAsFixed(2)}",
                           style:  TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,

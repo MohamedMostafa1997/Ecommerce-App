@@ -6,14 +6,14 @@ part 'check_out_state.dart';
 
 class CheckOutCubit extends Cubit<CheckOutState> {
   final CartRepo cartRepo;
-  List<Product> cartItems = [];
+
 
   CheckOutCubit({required this.cartRepo}) : super(CheckOutInitial());
 
   Future<void> fetchCheckoutItems() async {
     try {
       emit(CheckoutLoading());
-       cartItems = await cartRepo.fetchCartItems();
+      final List<Product>  cartItems = await cartRepo.fetchCartItems();
 
       if (cartItems.isEmpty) {
         emit(CheckoutError("No items Found"));
@@ -28,5 +28,5 @@ class CheckOutCubit extends Cubit<CheckOutState> {
   double getSingleProductPrice(Product product) =>
       cartRepo.calculateSingleProductTotal(product);
 
-  double get totalPrice => cartRepo.calculateTotalPrice(cartItems);
+  double getTotalPrice(List<Product> products) => cartRepo.calculateTotalPrice(products);
 }
