@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/core/routing/route_names.dart';
 import 'package:ecommerce_app/features/cart/cubit/cart_cubit.dart';
 import 'package:ecommerce_app/features/cart/widgets/cart_item_widget.dart';
+import 'package:ecommerce_app/features/cart/widgets/checkout_button_widget.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +43,7 @@ class _CartScreenState extends State<CartScreen> {
             ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
-        buildWhen: (previous, current){
+        buildWhen: (previous, current) {
           return current is! CartActionMessage;
         },
         builder: (context, state) {
@@ -62,44 +63,20 @@ class _CartScreenState extends State<CartScreen> {
                     itemCount: cartItems.length,
                     itemBuilder: (context, index) {
                       final Product product = cartItems[index];
-                      return CartItemWidget(
-                        product: product,
-                        cartCubit: context.read<CartCubit>(),
-                      );
+                      return CartItemWidget(product: product);
                     },
                   ),
                 ),
                 SizedBox(height: 20),
-                //TODO : Extracte form column
-                Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 24),
-                  child: SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.pinkAccent,
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      onPressed:
-                          () =>
-                              Navigator.pushNamed(context, RouteNames.checkOut),
-                      child: Text(
-                        "Checkout",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ),
+                const CheckoutButton()
               ],
             );
           }
+          
           return SizedBox();
         },
       ),
+      
     );
   }
 }

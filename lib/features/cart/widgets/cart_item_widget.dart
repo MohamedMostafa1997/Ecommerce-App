@@ -1,16 +1,16 @@
 import 'package:ecommerce_app/features/cart/cubit/cart_cubit.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartItemWidget extends StatelessWidget {
-  //TODO: remove constractor
   final Product product;
-  final CartCubit cartCubit;
+
 
   const CartItemWidget({
     super.key,
     required this.product,
-    required this.cartCubit,
+
   });
 
   @override
@@ -32,19 +32,19 @@ class CartItemWidget extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () => cartCubit.decreaseQuantity(product),
+                  onPressed: () => context.read<CartCubit>().decreaseQuantity(product),
                   icon: Icon(Icons.remove_circle_outline),
                 ),
                 Text("${product.quantity}"),
                 IconButton(
-                  onPressed: () => cartCubit.increaseQuantity(product),
+                  onPressed: () => context.read<CartCubit>()..increaseQuantity(product),
                   icon: Icon(Icons.add_circle_outline),
                 ),
               ],
             ),
             IconButton(
               icon: Icon(Icons.close, color: Colors.red),
-              onPressed: () => cartCubit.removeItem(product),
+              onPressed: () => context.read<CartCubit>()..removeItem(product),
             ),
           ],
         ),
