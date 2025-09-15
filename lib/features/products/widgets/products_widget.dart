@@ -1,5 +1,8 @@
+import 'package:ecommerce_app/features/products/cubit/products_cubit.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
+import 'package:ecommerce_app/features/products/widgets/my_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
@@ -11,6 +14,16 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      onLongPress: () {
+        showDialog(
+          context: context,
+          builder:
+              (_) => BlocProvider.value(
+                value: context.read<ProductsCubit>(),
+                child: MyAlertDialog(),
+              ),
+        );
+      },
       child: Card(
         elevation: 4,
         child: Column(
