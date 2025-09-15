@@ -2,6 +2,7 @@ import 'package:ecommerce_app/core/routing/route_names.dart';
 import 'package:ecommerce_app/features/products/cubit/products_cubit.dart';
 import 'package:ecommerce_app/features/products/entities/product.dart';
 import 'package:ecommerce_app/features/products/widgets/error_products.dart';
+import 'package:ecommerce_app/features/products/widgets/products_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -91,61 +92,35 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     onRetry:
                         () => context.read<ProductsCubit>().fetchProducts(),
                   );
-                } else if (state is ProductsLoaded) {
-                  final List<Product> products = state.products;
-                  if (products.isEmpty) {
-                    return Center(child: Text("No products found."));
-                  }
-
-                  return GridView.builder(
-                    padding: EdgeInsets.all(8),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      childAspectRatio: 0.7,
-                    ),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      final Product product = products[index];
-                      return GestureDetector(
-                        onTap: () => goToDetails(product.id),
-                        child: Card(
-                          elevation: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(
-                                child: Image.network(
-                                  product.image,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Text(
-                                  product.name,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8),
-                                child: Text(
-                                  '\$${product.price.toStringAsFixed(2)}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
                 }
-                return  SizedBox();
+                List<Product> products = [];
+
+                if (state is ProductsLoaded) {
+                  products = state.products;
+                } else if (state is ProductsSearched) {
+                  products = state.filteredProducts;
+                }
+
+                if (products.isEmpty) {
+                  return Center(child: Text("No products found."));
+                }
+
+                return GridView.builder(
+                  padding: EdgeInsets.all(8),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    childAspectRatio: 0.7,
+                  ),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return ProductItem(
+                      product: products[index],
+                      onTap: () => goToDetails(products[index].id),
+                    );
+                  },
+                );
               },
             ),
           ),

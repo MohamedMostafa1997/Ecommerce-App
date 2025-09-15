@@ -18,3 +18,9 @@ final class ProductsError extends ProductsState {
   ProductsError(this.message);
 }
 
+final class ProductsSearched extends ProductsState {
+  final List<Product> filteredProducts;
+  final String query;
+
+  ProductsSearched({required this.filteredProducts, required this.query});
+}

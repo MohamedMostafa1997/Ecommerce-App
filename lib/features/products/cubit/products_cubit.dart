@@ -25,7 +25,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsError(result['message']));
     }
   }
-  //TODO:
+
   void filterProducts(String query) {
     if (query.isEmpty) {
       emit(ProductsLoaded(products: allProducts));
@@ -38,7 +38,7 @@ class ProductsCubit extends Cubit<ProductsState> {
               )
               .toList();
 
-      emit(ProductsLoaded(products: filterd));
+      emit(ProductsSearched(filteredProducts: filterd, query: query));
     }
   }
 
